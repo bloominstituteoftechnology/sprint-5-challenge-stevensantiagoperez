@@ -41,6 +41,7 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
       learnersContainer.textContent = '';
 
       const infoParagraph = document.querySelector('p.info'); // Select the info paragraph
+      infoParagraph.textContent = 'No learner is selected'; // Set the initial text
 
       combinedData.forEach(learner => {
         const learnerCard = createLearnerCard(learner, infoParagraph);
