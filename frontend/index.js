@@ -38,7 +38,7 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
         return learnerInfo;
       });
 
-      learnersContainer.textContent = '';
+      // learnersContainer.textContent = '';
 
       const infoParagraph = document.querySelector('p.info'); // Select the info paragraph
       infoParagraph.textContent = 'No learner is selected'; // Set the initial text
