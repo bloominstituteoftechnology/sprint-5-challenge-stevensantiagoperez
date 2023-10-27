@@ -10,12 +10,12 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
 
   async function fetchData() {
     try {
-      const [ learnersResponse, mentorsResponse] = await Promise.all([
+      const [learnersResponse, mentorsResponse] = await Promise.all([
         axios.get('http://localhost:3003/api/learners'),
-        axios.get('http://localhost:3003/api/mentors')
+        axios.get('http://localhost:3003/api/mentors'),
       ]);
 
-      // process the data
+      // Process the data
       const learners = learnersResponse.data;
       const mentors = mentorsResponse.data;
 
@@ -24,33 +24,33 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
         mentorsMap.set(mentor.id, mentor);
       });
 
-      // array to store the combines learner data
+      // Array to store the combined learner data
       const combinedData = learners.map(learner => {
         const learnerInfo = {
-            id: learner.id,
-            name: learner.fullName,
-            email: learner.email,
-            mentors: learner.mentors.map(mentorId => {
-                const mentor = mentors.find(m => m.id === mentorId);
-                return mentor ? `${mentor.firstName} ${mentor.lastName}` : 'Unknown Mentor';
-            })
+          id: learner.id,
+          name: learner.fullName,
+          email: learner.email,
+          mentors: learner.mentors.map(mentorId => {
+            const mentor = mentors.find(m => m.id === mentorId);
+            return mentor ? `${mentor.firstName} ${mentor.lastName}` : 'Unknown Mentor';
+          }),
         };
         return learnerInfo;
       });
 
       learnersContainer.textContent = '';
 
+      const infoParagraph = document.querySelector('.info'); // Select the info paragraph
+
       combinedData.forEach(learner => {
-        const learnerCard = createLearnerCard(learner);
-      })
-
-
+        const learnerCard = createLearnerCard(learner, infoParagraph);
+      });
     } catch (error) {
       footer.textContent = errorMessage;
     }
   }
 
-  function createLearnerCard(learner) {
+  function createLearnerCard(learner, infoParagraph) {
     const card = document.createElement('div');
     card.classList.add('card');
 
@@ -63,7 +63,7 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
     card.appendChild(emailParagraph);
 
     const mentorsHeader = document.createElement('h4');
-    mentorsHeader.textContent = "Mentors";
+    mentorsHeader.textContent = 'Mentors';
     card.appendChild(mentorsHeader);
 
     const mentorsList = document.createElement('ul');
@@ -71,27 +71,24 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
       const mentorItem = document.createElement('li');
       mentorItem.textContent = mentor;
       mentorsList.appendChild(mentorItem);
-    })
+    });
     card.appendChild(mentorsList);
 
-    const dropdownArrow = document.createElement('span');
-    dropdownArrow.textContent = '▼';
-    dropdownArrow.classList.add('dropdown-arrow');
-    mentorsHeader.appendChild(dropdownArrow);
+    // Uncomment the following code to add a dropdown arrow
+    // const dropdownArrow = document.createElement('span');
+    // dropdownArrow.textContent = '▼';
+    // dropdownArrow.classList.add('dropdown-arrow');
+    // mentorsHeader.appendChild(dropdownArrow);
 
-    card.addEventListener( 'click' , () => {
-      // expand and collapse
-      if (card.style.backgroundColor !== 'white') {
-        card.style.backgroundColor = 'white';
-        card.style.boxShadow = '0px 0px 5px rgba(0, 0, 0, 0.5)'; // Add drop shadow
-        mentorsList.style.display = 'block'; // Expand the mentor list
+    card.addEventListener('click', () => {
+      if (card.classList.contains('selected')) {
+        card.classList.remove('selected');
+        infoParagraph.textContent = 'No learner is selected';
       } else {
-        card.style.backgroundColor = ''; // Reset background color
-        card.style.boxShadow = ''; // Remove drop shadow
-        dropdownArrow.style.color = ''; // Reset dropdown arrow color
-        mentorsList.style.display = 'none'; // Collapse the mentor list
+        card.classList.add('selected');
+        infoParagraph.textContent = `The selected learner is ${learner.name}`;
       }
-    })
+    });
 
     learnersContainer.appendChild(card);
 
@@ -99,16 +96,9 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
   }
 
   fetchData();
-
-  try {
-    module.exports = {
-      sprintChallenge5: fetchData
-    }
-  } catch {
-    //handle error
-  }
   // 👆 WORK WORK ABOVE THIS LINE 👆
 }
+sprintChallenge5();
 
 // ❗ DO NOT CHANGE THE CODE  BELOW
 if (typeof module !== 'undefined' && module.exports) module.exports = { sprintChallenge5 }
