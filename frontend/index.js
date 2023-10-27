@@ -50,6 +50,8 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
     }
   }
 
+  let selectedCard = null;
+
   function createLearnerCard(learner, infoParagraph) {
     const card = document.createElement('div');
     card.classList.add('card');
@@ -75,7 +77,10 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
     });
     card.appendChild(mentorsList);
 
-    mentorsHeader.addEventListener('click', () => {
+    mentorsHeader.addEventListener('click', (event) => {
+      // Stop the event from propagating to the card
+      event.stopPropagation();
+    
       if (mentorsHeader.classList.contains('closed')) {
         mentorsHeader.classList.remove('closed');
         mentorsHeader.classList.add('open');
@@ -90,14 +95,24 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
     // dropdownArrow.textContent = '▼';
     // dropdownArrow.classList.add('dropdown-arrow');
     // mentorsHeader.appendChild(dropdownArrow);
+    
 
     card.addEventListener('click', () => {
-      if (card.classList.contains('selected')) {
+      if (selectedCard === card) {
+        // Deselect the card and update the infoParagraph
         card.classList.remove('selected');
         infoParagraph.textContent = 'No learner is selected';
+        selectedCard = null;
       } else {
+        if (selectedCard) {
+          // Deselect the previously selected card
+          selectedCard.classList.remove('selected');
+        }
+
+        // Select the clicked card and update the infoParagraph
         card.classList.add('selected');
         infoParagraph.textContent = `The selected learner is ${learner.name}`;
+        selectedCard = card;
       }
     });
 
