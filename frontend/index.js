@@ -61,7 +61,7 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
     nameHeader.textContent = learner.name;
     card.appendChild(nameHeader);
 
-    const emailParagraph = document.createElement('p');
+    const emailParagraph = document.createElement('div');
     emailParagraph.textContent = learner.email;
     card.appendChild(emailParagraph);
 
