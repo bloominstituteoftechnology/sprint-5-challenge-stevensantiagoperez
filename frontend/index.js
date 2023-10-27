@@ -64,6 +64,7 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
 
     const mentorsHeader = document.createElement('h4');
     mentorsHeader.textContent = 'Mentors';
+    mentorsHeader.classList.add('closed'); // Initially, set it to 'closed'
     card.appendChild(mentorsHeader);
 
     const mentorsList = document.createElement('ul');
@@ -73,6 +74,16 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
       mentorsList.appendChild(mentorItem);
     });
     card.appendChild(mentorsList);
+
+    mentorsHeader.addEventListener('click', () => {
+      if (mentorsHeader.classList.contains('closed')) {
+        mentorsHeader.classList.remove('closed');
+        mentorsHeader.classList.add('open');
+      } else {
+        mentorsHeader.classList.remove('open');
+        mentorsHeader.classList.add('closed');
+      }
+    });
 
     // Uncomment the following code to add a dropdown arrow
     // const dropdownArrow = document.createElement('span');
