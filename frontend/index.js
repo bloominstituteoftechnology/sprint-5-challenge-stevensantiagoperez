@@ -90,13 +90,6 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
       }
     });
 
-    // Uncomment the following code to add a dropdown arrow
-    // const dropdownArrow = document.createElement('span');
-    // dropdownArrow.textContent = '▼';
-    // dropdownArrow.classList.add('dropdown-arrow');
-    // mentorsHeader.appendChild(dropdownArrow);
-    
-
     card.addEventListener('click', () => {
       if (selectedCard === card) {
         // Deselect the card and update the infoParagraph
