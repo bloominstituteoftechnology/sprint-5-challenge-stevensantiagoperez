@@ -98,7 +98,6 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
   fetchData();
   // 👆 WORK WORK ABOVE THIS LINE 👆
 }
-sprintChallenge5();
 
 // ❗ DO NOT CHANGE THE CODE  BELOW
 if (typeof module !== 'undefined' && module.exports) module.exports = { sprintChallenge5 }
